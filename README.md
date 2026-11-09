@@ -1,43 +1,28 @@
 # mario-nnet-demo
 
-Two screens for an event table, built around World 1-1 of Super Mario Bros.:
-people play and their deaths become a heatmap, while a neural network learns
-the same level next to them, from its own attempts and from people's games.
+Play Super Mario Bros. to help the neural net learn to beat World 11. It will learn from both your attempts and the computer’s attempts beside you.
 
 ![Screen 1: a death lands on the heatmap. Screen 2: five AI trials and the brain of Trial 1](docs/demo.gif)
 
-*Test footage. The "people" in this clip are a scripted test player, not real
-visitors, and the AI was trained for about three minutes before recording.*
-
-1. **Where does Mario die?** (`deaths.html`). People play 1-1 with a keyboard
-   or USB controller. Every death is logged with where it happened and what
-   caused it. Next to the game, the same stretch of level shows everyone's
-   deaths as a heatmap. Below that, two strips show the whole level, one for
-   people and one for the AI. A side column turns the data into what a
-   designer would read from it: top killers, the deadliest spots, and short
-   notes on what to change.
-2. **An AI learning 1-1** (`ai.html`). A NEAT neural network learns the
+1. **Where does Mario die?** (`deaths.html`). As players play Mario, we’ll track where they die, enhancing the heatmap to show the locations most likely to cause deaths on each level.
+   
+3. **An AI learning 1-1** (`ai.html`). A NEAT neural network learns the
    level by trial and error, and from the people playing screen 1. Five trials
    play at once in a 3×2 grid. The sixth cell shows Trial 1's brain live: the
    13×13 grid of blocks and enemies it sees, the neurons it has grown, and the
-   buttons it presses. Two charts track its best run and brain size over the
-   generations. Brains taught by people are marked orange and self-taught ones
-   blue, matching the two heatmaps. The AI's deaths feed the AI strip on
-   screen 1.
+   buttons it presses. 
 
-Everything runs locally: a Node server with no dependencies, the jsnes emulator
-vendored in `web/vendor/jsnes` (Apache-2.0), and plain ES modules.
+You can run this locally on almost any computer, as long as you can run a Node server. This uses the jsnes emulator vendored in `web/vendor/jsnes` (Apache-2.0).
 
 ## What you need
 
 - Node 20 or newer, and Chrome.
-- **Your own copy of the game. It is not included and never will be.** The
+- **Your own copy of the game.** The
   code expects a dump of the **Super Mario Bros. + Duck Hunt (USA)** cartridge,
-  the one that came with the NES (81,936 bytes, iNES mapper 66). Put the
-  `.nes` file in `rom/`. The screens pick Super Mario Bros. from the cart's
-  menu by themselves; Duck Hunt needs a light gun, which cannot work on an
-  LCD. `rom/` and `data/` are git-ignored, so neither the ROM nor anything
-  rendered from it is committed.
+  the one that came with the NES. Put the
+  `.nes` file in `rom/`.
+
+  When you launch it, the screen picks Super Mario Bros. and starts up.
 
 ## Run it
 
@@ -65,12 +50,7 @@ event's.
 | Z / J / Shift run (hold) | left or top face button |
 | Enter start, Backspace select | Start / Select |
 
-A controller the browser recognises (Xbox, PlayStation, 8BitDo in X-input)
-works as listed. Cheap USB NES/SNES pads report their buttons in different
-orders. If jump and run are swapped, look up the button numbers on
-gamepad-tester.com and add them to the URL, e.g.
-`deaths.html?pad=1:A,2:A,0:B,3:B`. In 2-player mode a second controller
-plays Luigi; with only one, it plays both turns.
+If you plug in a controller, you can also play the game with it.
 
 ### Hidden keys
 
@@ -82,13 +62,8 @@ plays Luigi; with only one, it plays both turns.
 | Ctrl+Alt+T | 1 | back to the title screen |
 | Ctrl+Alt+1 to 4 | 2 | on-screen speed 1×, 2×, 4×, 8× |
 | Ctrl+Alt+H | 2 | background helpers on/off |
-| Ctrl+Alt+N twice | 2 | throw the brain away and learn from nothing |
+| Ctrl+Alt+N twice | 2 | Delete the  brain away and learn again from scratch|
 | Ctrl+Alt+F | both | full screen |
-
-Both windows share one keyboard, and keys only reach the focused window. The
-launcher opens the AI window first so the game window ends up focused. If the
-game stops answering the keyboard, click the game once (or keep the mouse off
-the table).
 
 AI screen URL options: `?speed=2`, `?workers=N` (helpers), `?pop=300`,
 `?restart=10` (generations after its first clear before it starts over with a
