@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>AI Learns Mario</title>
+  <link rel="stylesheet" href="shared/theme.css">
+  <link rel="stylesheet" href="ai.css">
+</head>
+<body>
+<div class="stage" id="stage">
+  <header class="top">
+    <div class="titles">
+      <h1>An AI learning World 1-1</h1>
+      <p id="subtitle">Learning from its own attempts, and from every game people play on the other screen.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="v" id="sGen">0</span><span class="k">generation</span></div>
+      <div class="stat"><span class="v" id="sAttempts">0</span><span class="k">attempts</span></div>
+      <div class="stat"><span class="v" id="sBest">0%</span><span class="k">best run</span></div>
+      <div class="stat"><span class="v" id="sTime">0:00</span><span class="k">learning for</span></div>
+    </div>
+  </header>
+
+  <section class="grid" id="grid">
+    <!-- five trial tiles are added by ai.js -->
+    <div class="tile brain">
+      <div class="brainHead">
+        <h2 id="brainTitle">Inside Trial 1's brain</h2>
+        <div class="brainStats" id="brainStats"></div>
+      </div>
+      <canvas id="net" width="1162" height="530"></canvas>
+      <div class="charts">
+        <figure>
+          <figcaption>Best run each generation <span>(share of 1-1)</span></figcaption>
+          <canvas id="chartBest" width="566" height="200"></canvas>
+        </figure>
+        <figure>
+          <figcaption>Size of the best brain <span>(connections)</span></figcaption>
+          <canvas id="chartSize" width="566" height="200"></canvas>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="celebrate" id="celebrate"></div>
+  <div class="runs" id="runs"></div>
+</div>
+<script type="module" src="ai.js"></script>
+</body>
+</html>

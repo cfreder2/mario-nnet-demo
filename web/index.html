@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Mario Death Map</title>
+  <style>
+    :root { color-scheme: light; --bg: #f9f9f7; --card: #fcfcfb; --ink: #0b0b0b; --ink2: #52514e; --muted: #898781; --line: #e1e0d9; --ok: #006300; --bad: #d03b3b; --accent: #2a78d6; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { color-scheme: dark; --bg: #0d0d0d; --card: #1a1a19; --ink: #f0efec; --ink2: #c3c2b7; --muted: #898781; --line: #2c2c2a; --ok: #0ca30c; --bad: #e66767; --accent: #3987e5; }
+    }
+    :root[data-theme="dark"] { color-scheme: dark; --bg: #0d0d0d; --card: #1a1a19; --ink: #f0efec; --ink2: #c3c2b7; --muted: #898781; --line: #2c2c2a; --ok: #0ca30c; --bad: #e66767; --accent: #3987e5; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    main { max-width: 860px; margin: 0 auto; padding: 48px 16px 64px; }
+    h1 { font-size: 34px; margin: 0 0 6px; }
+    .lead { color: var(--ink2); margin: 0 0 28px; }
+    .screens { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) { .screens { grid-template-columns: 1fr; } }
+    a.screen { display: block; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: inherit; text-decoration: none; }
+    a.screen:hover { border-color: var(--accent); }
+    a.screen b { display: block; font-size: 20px; margin-bottom: 4px; }
+    a.screen span { color: var(--ink2); }
+    h2 { font-size: 15px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 36px 0 10px; }
+    ul.checks { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+    ul.checks li { padding: 12px 16px; border-top: 1px solid var(--line); display: flex; gap: 10px; }
+    ul.checks li:first-child { border-top: 0; }
+    .ok { color: var(--ok); font-weight: 700; }
+    .bad { color: var(--bad); font-weight: 700; }
+    code, kbd { font: 14px ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--line); padding: 1px 6px; border-radius: 5px; }
+    table { border-collapse: collapse; width: 100%; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    td { padding: 9px 14px; border-top: 1px solid var(--line); vertical-align: top; }
+    tr:first-child td { border-top: 0; }
+    td:first-child { white-space: nowrap; width: 1%; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Mario Death Map</h1>
+  <p class="lead">Two screens for an event table. One lets people play World 1-1 and maps every death. The other shows an AI teaching itself the same level.</p>
+  <div class="screens">
+    <a class="screen" href="deaths.html"><b>Screen 1: Where does Mario die?</b><span>Play, die, and watch your death join everyone else's on the heatmap.</span></a>
+    <a class="screen" href="ai.html"><b>Screen 2: An AI learns 1-1</b><span>Five trials at once and the neural network growing as it learns.</span></a>
+  </div>
+
+  <h2>Setup check</h2>
+  <ul class="checks" id="checks"><li>Checking…</li></ul>
+
+  <h2>Hidden keys</h2>
+  <table>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>M</kbd></td><td>Screen 1: sound on/off</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>E</kbd></td><td>Screen 1: download every event as CSV</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>R</kbd> twice</td><td>Screen 1: archive player deaths and start a fresh map (nothing is deleted; it moves to <code>data/archive/</code>)</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd></td><td>Screen 1: back to the title screen</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>1</kbd>–<kbd>4</kbd></td><td>Screen 2: on-screen speed 1×, 2×, 4×, 8×</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>H</kbd></td><td>Screen 2: background helpers on/off (off = every attempt plays on screen, slower learning)</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd> twice</td><td>Screen 2: throw the brain away and learn from nothing</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd></td><td>Full screen</td></tr>
+  </table>
+</main>
+<script type="module">
+  const s = await fetch('/api/status').then((r) => r.json()).catch(() => null);
+  const items = [];
+  const row = (ok, text) => items.push(`<li><span class="${ok ? 'ok' : 'bad'}">${ok ? '✓' : '✕'}</span><span>${text}</span></li>`);
+  if (!s) row(false, 'Server not reachable. Run <code>node server.mjs</code>.');
+  else {
+    row(!!s.rom, s.rom ? `ROM found: <code>${s.rom}</code> (${s.romBytes.toLocaleString()} bytes)` : 'No ROM. Put the Super Mario Bros. + Duck Hunt <code>.nes</code> file in <code>rom/</code>.');
+    row(s.maps.includes('1-1.png'), s.maps.includes('1-1.png') ? 'Level map of 1-1 built' : 'Level map of 1-1 missing: restart the server to build it.');
+    row(true, `${s.events.people.toLocaleString()} player deaths and ${s.events.ai.toLocaleString()} AI deaths recorded`);
+    row(true, `${s.demos.lives.toLocaleString()} lives (${s.demos.moves.toLocaleString()} moves) recorded for the AI to learn from`);
+    row(true, s.brain ? 'The AI has a saved brain and will pick up where it left off' : 'The AI will start from nothing');
+  }
+  document.getElementById('checks').innerHTML = items.join('');
+</script>
+</body>
+</html>

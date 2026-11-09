@@ -1,0 +1,90 @@
+/* Shared tokens for both kiosk screens. Dark by design: these run on a
+   monitor in a room, often next to other screens. A light set is provided
+   for the setup page only. */
+:root {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface-1: #1a1a19;
+  --surface-2: #232321;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+  --gridline: #2c2c2a;
+  --axis: #383835;
+  --border: rgba(255, 255, 255, 0.1);
+  --people: #f2872f;      /* warm ramp, mid step */
+  --people-deep: #d23a26;
+  --ai: #3987e5;          /* palette blue, dark-mode step */
+  --ai-light: #6da7ec;
+  --good: #0ca30c;
+  --critical: #d03b3b;
+  --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--page);
+  color: var(--text-primary);
+  font-family: var(--font);
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: none;
+}
+/* Everything is laid out on a fixed 1920x1080 stage, then scaled to fit
+   whatever monitor the kiosk is plugged into. */
+.stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+}
+canvas.pixel { image-rendering: pixelated; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(13, 13, 13, 0.78);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  max-width: 1100px;
+  text-align: center;
+  transform: translateX(-50%);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+.fatal {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1.5;
+  padding: 80px;
+  z-index: 100;
+  background: var(--page);
+}
+.fatal code { background: var(--surface-2); padding: 2px 8px; border-radius: 6px; }

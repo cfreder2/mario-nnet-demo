@@ -1,0 +1,62 @@
+.top {
+  position: absolute; left: 24px; right: 24px; top: 18px; height: 80px;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+}
+.titles h1 { margin: 0; font-size: 42px; font-weight: 800; letter-spacing: -0.01em; }
+.titles p { margin: 4px 0 0; font-size: 19px; color: var(--text-secondary); max-width: 980px; }
+.stats { display: flex; gap: 36px; flex-shrink: 0; }
+.stat { display: flex; flex-direction: column; align-items: flex-end; }
+.stat .v { font-size: 42px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat .k { font-size: 15px; color: var(--text-muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.grid {
+  position: absolute; left: 24px; top: 112px; width: 1872px; height: 952px;
+  display: grid; grid-template-columns: repeat(3, 613px); grid-template-rows: repeat(2, 466px); gap: 20px 16px;
+}
+.tile { position: relative; background: #000; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+.tile canvas.game { position: absolute; left: 50%; top: 0; width: 573px; height: 448px; transform: translateX(-50%); }
+.tile .tl, .tile .tr { position: absolute; top: 12px; }
+.tile .tl { left: 12px; }
+.tile .tr { right: 12px; font-weight: 500; color: var(--text-secondary); }
+.tile .badge { position: absolute; left: 12px; top: 54px; font-size: 15px; color: #0b0b0b; background: #ffd27a; border-color: transparent; }
+.tile .badge.hidden { display: none; }
+.tile .badge { background: var(--ai); color: #fff; border-color: transparent; }
+.tile .badge.people { background: var(--people); color: #0b0b0b; }
+.tile .ff { position: absolute; right: 12px; top: 54px; font-size: 15px; }
+.tile .ff.hidden { display: none; }
+.progress { position: absolute; left: 0; right: 0; bottom: 0; height: 18px; background: var(--surface-1); }
+.progress .bar { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ai); transition: width 0.1s linear; }
+.progress .best { position: absolute; top: -4px; bottom: 0; width: 3px; background: var(--text-primary); }
+.progress .flag { position: absolute; right: 6px; top: 0; font-size: 12px; line-height: 18px; color: var(--text-muted); }
+.end {
+  position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%);
+  font-size: 30px; font-weight: 800; padding: 10px 20px; border-radius: 10px;
+  background: rgba(13,13,13,0.86); border: 1px solid var(--border);
+  opacity: 0; transition: opacity 0.15s; white-space: nowrap;
+}
+.end.show { opacity: 1; }
+.end small { display: block; font-size: 17px; font-weight: 500; color: var(--text-secondary); text-align: center; margin-top: 2px; }
+
+.brain { background: var(--surface-1); padding: 14px 16px; display: flex; flex-direction: column; }
+.brainHead { display: flex; align-items: baseline; justify-content: space-between; }
+.brainHead h2 { margin: 0; font-size: 15px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.brainStats { font-size: 15px; color: var(--text-secondary); }
+#net { width: 581px; height: 265px; margin-top: 6px; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+.charts figure { margin: 0; }
+.charts figcaption { font-size: 14px; color: var(--text-primary); font-weight: 600; margin-bottom: 4px; }
+.charts figcaption span { color: var(--text-muted); font-weight: 400; }
+.charts canvas { width: 283px; height: 100px; display: block; }
+
+.celebrate {
+  position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%) scale(0.96);
+  background: rgba(13,13,13,0.94); border: 2px solid #ffd27a; border-radius: 16px;
+  padding: 30px 46px; text-align: center; opacity: 0; transition: opacity 0.4s, transform 0.4s; pointer-events: none; z-index: 10;
+}
+.celebrate.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.celebrate .big { font-size: 54px; font-weight: 850; }
+.celebrate .sub { font-size: 24px; color: var(--text-secondary); margin-top: 10px; }
+
+.runs {
+  position: absolute; right: 24px; bottom: 2px; font-size: 14px; color: var(--text-secondary);
+}

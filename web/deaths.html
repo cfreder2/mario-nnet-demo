@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Where Mario Dies</title>
+  <link rel="stylesheet" href="shared/theme.css">
+  <link rel="stylesheet" href="deaths.css">
+</head>
+<body>
+<div class="stage" id="stage">
+  <header class="top">
+    <div class="titles">
+      <h1>Where does Mario die?</h1>
+      <p>Every death on World 1-1, from everyone who has played here. Your moves also teach the AI next door.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="v" id="statDeaths">0</span><span class="k">deaths</span></div>
+      <div class="stat"><span class="v" id="statGames">0</span><span class="k">games played</span></div>
+      <div class="stat"><span class="v" id="statFlag">–</span><span class="k">of lives reach the flag</span></div>
+    </div>
+  </header>
+
+  <section class="main">
+    <div class="panel live">
+      <canvas id="game" class="pixel" width="256" height="224"></canvas>
+      <div class="chip corner">You</div>
+      <div class="attract" id="attract">
+        <div class="press">Press <b>START</b> to play</div>
+        <div class="controls">
+          <span><kbd>←</kbd><kbd>→</kbd> move</span>
+          <span><kbd>X</kbd> / <kbd>Space</kbd> jump</span>
+          <span><kbd>Z</kbd> hold to run</span>
+          <span><kbd>Enter</kbd> start</span>
+        </div>
+        <div class="pads" id="pads"></div>
+      </div>
+      <div class="card gameover" id="gameover"></div>
+      <div class="banner" id="banner"></div>
+    </div>
+
+    <div class="panel heat">
+      <canvas id="heatView" width="768" height="672"></canvas>
+      <div class="chip corner" id="heatLabel"><span class="swatch" style="background:var(--people)"></span>Everyone's deaths, right here</div>
+      <div class="legend">
+        <span>fewer</span><span class="ramp people"></span><span>more deaths</span>
+      </div>
+      <div class="callout" id="callout"></div>
+    </div>
+
+    <aside class="side">
+      <div class="card">
+        <h2>Top killers</h2>
+        <div id="killers" class="bars"></div>
+      </div>
+      <div class="card">
+        <h2>Deadliest spots</h2>
+        <ol id="hotspots" class="hotspots"></ol>
+      </div>
+      <div class="card note" id="note">
+        <h2>What a designer sees</h2>
+        <h3 id="noteTitle"></h3>
+        <p id="noteBody"></p>
+      </div>
+    </aside>
+  </section>
+
+  <section class="strips">
+    <div class="stripRow">
+      <div class="stripLabel"><span><span class="swatch" style="background:var(--people)"></span>People</span><small>every death<br>on 1-1</small></div>
+      <div class="strip">
+        <canvas id="stripPeople" width="1762" height="92"></canvas>
+        <div class="spots" id="spotsPeople"></div>
+        <div class="window" id="windowPeople"></div>
+      </div>
+    </div>
+    <div class="stripRow">
+      <div class="stripLabel"><span><span class="swatch" style="background:var(--ai)"></span>AI</span><small>while it<br>learns</small></div>
+      <div class="strip">
+        <canvas id="stripAI" width="1762" height="92"></canvas>
+        <div class="spots" id="spotsAI"></div>
+        <div class="empty" id="emptyAI">The AI hasn't played yet. Open the AI screen to start it learning.</div>
+      </div>
+    </div>
+  </section>
+</div>
+<script type="module" src="deaths.js"></script>
+</body>
+</html>

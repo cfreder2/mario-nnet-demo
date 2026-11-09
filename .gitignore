@@ -1,0 +1,9 @@
+# The ROM is Nintendo's. Keep it local; never commit or publish it.
+rom/*.nes
+rom/*.zip
+# Player data, level maps rendered from the ROM, the AI's brain
+data/
+# Chrome kiosk profiles
+.chrome/
+node_modules/
+.DS_Store

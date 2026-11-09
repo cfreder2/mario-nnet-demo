@@ -1,0 +1,16 @@
+{
+  "name": "mario-death-map",
+  "private": true,
+  "description": "Two kiosk screens: a death heatmap of Super Mario Bros. 1-1, and a NEAT network learning the level.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "kiosk": "./start-kiosk.command",
+    "map": "node tools/capture-map.mjs",
+    "train": "node tools/train.mjs",
+    "check": "node tools/check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
